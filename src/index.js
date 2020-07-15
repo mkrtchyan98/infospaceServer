@@ -10,6 +10,7 @@ const UserAPI = require('./datasources/user');
 const store = createStore();
 
 	const server = new ApolloServer({
+    cors:true,
   context: async ({ req }) => {
     const auth = req.headers && req.headers.authorization || ''; 
        const email = Buffer.from(auth, 'base64').toString('ascii'); 
@@ -31,6 +32,6 @@ const store = createStore();
   }),
 });
 
-server.listen().then(({ url }) => {
+server.listen({ port: process.env.MY_PORT || 5000 }).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });
